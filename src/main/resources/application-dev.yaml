@@ -1,0 +1,27 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:22106/flow?useUnicode=true&characterEncoding=utf8
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: flow_assignment
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 5
+      idle-timeout: 30000
+      connection-timeout: 30000
+      pool-name: HikariDevPool
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+app:
+  extensions:
+    defaults:
+      - bat
+      - cmd
+      - com
+      - cpl
+      - exe
+      - scr
+      - js
