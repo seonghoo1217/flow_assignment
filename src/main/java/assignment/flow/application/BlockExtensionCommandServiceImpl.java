@@ -53,7 +53,7 @@ public class BlockExtensionCommandServiceImpl implements BlockExtensionCommandSe
     }
 
     @Override
-    public void registerExtension(String name, String description, String type, String version, String url) {
+    public void registerExtension(String name) {
 
     }
 }
