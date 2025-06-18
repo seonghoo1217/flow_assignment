@@ -1,5 +1,6 @@
 package assignment.flow.domain.entity;
 
+import assignment.flow.global.entity.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -12,7 +13,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Extension {
+public class BlockExtension extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -25,7 +26,7 @@ public class Extension {
 
     private boolean enabled;
 
-    public Extension(String extensionName, ExtensionType extensionType, boolean enabled) {
+    public BlockExtension(String extensionName, ExtensionType extensionType, boolean enabled) {
         this.extensionName = extensionName;
         this.extensionType = extensionType;
         this.enabled = enabled;
