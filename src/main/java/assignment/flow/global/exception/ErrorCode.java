@@ -15,7 +15,9 @@ public enum ErrorCode {
 
     // Common
     INTERNAL_SERVER_ERROR(
-            HttpStatus.INTERNAL_SERVER_ERROR, "서버에 오류가 생겼습니다. 관리자에게 문의하세요.", Set.of()),
+            HttpStatus.INTERNAL_SERVER_ERROR,
+            "서버에 오류가 생겼습니다. 관리자에게 문의하세요.",
+            Set.of()),
     INVALID_INPUT_VALUE(
             HttpStatus.BAD_REQUEST,
             "입력 값이 올바르지 않습니다.",
@@ -25,10 +27,16 @@ public enum ErrorCode {
             "지원하지 않는 HTTP 메서드입니다.",
             Set.of(HttpRequestMethodNotSupportedException.class)),
 
+
+    //Extension
     EXISTS_BLOCK_EXTENSION(
             HttpStatus.BAD_REQUEST,
             "이미 존재하는 확장자 차단입니다.",
-            Set.of(BlockExtensionExistsException.class));
+            Set.of(BlockExtensionExistsException.class)),
+    LIMIT_EXTENSION_COUNT(
+            HttpStatus.BAD_REQUEST,
+            "확장자 차단은 최대 200개까지 가능합니다.",
+            Set.of());
 
     private final HttpStatusCode status;
     private final String code;

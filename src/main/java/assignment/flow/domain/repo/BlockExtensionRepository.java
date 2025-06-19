@@ -18,4 +18,6 @@ public interface BlockExtensionRepository extends Repository<BlockExtension, Lon
     BlockExtension save(BlockExtension blockExtension);
 
     boolean existsBlockExtensionsByExtensionName(String extensionName);
+
+    long countByExtensionType(ExtensionType extensionType);
 }

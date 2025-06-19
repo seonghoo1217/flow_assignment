@@ -3,9 +3,11 @@ package assignment.flow.application;
 import assignment.flow.domain.entity.BlockExtension;
 import assignment.flow.domain.entity.ExtensionType;
 import assignment.flow.domain.exception.BlockExtensionExistsException;
+import assignment.flow.domain.exception.BlockExtensionLimitException;
 import assignment.flow.domain.repo.BlockExtensionRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
@@ -22,6 +24,9 @@ public class BlockExtensionCommandServiceImpl implements BlockExtensionCommandSe
 
     private final BlockExtensionRepository repository;
     private final NamedParameterJdbcTemplate jdbc;
+
+    @Value("${app.extensions.custom.max}")
+    private Integer CUSTOM_MAX;
 
     private static final String BATCH_INSERT_SQL =
             "INSERT INTO block_extensions " +
@@ -59,6 +64,12 @@ public class BlockExtensionCommandServiceImpl implements BlockExtensionCommandSe
         if (repository.existsBlockExtensionsByExtensionName(name)) {
             throw new BlockExtensionExistsException();
         }
+
+        long customCount = repository.countByExtensionType(ExtensionType.CUSTOM);
+        if (customCount >= CUSTOM_MAX) {
+            throw new BlockExtensionLimitException();
+        }
+
 
         BlockExtension blockExtension = new BlockExtension(name, ExtensionType.CUSTOM, true);
 
