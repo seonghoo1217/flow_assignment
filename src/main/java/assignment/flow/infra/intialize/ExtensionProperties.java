@@ -1,5 +1,6 @@
 package assignment.flow.infra.intialize;
 
+import lombok.Getter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
@@ -8,12 +9,9 @@ import java.util.List;
 
 @Component
 @ConfigurationProperties(prefix = "app.extensions")
+@Getter
 public class ExtensionProperties {
     private List<String> defaults = new ArrayList<>();
-
-    public List<String> getDefaults() {
-        return defaults;
-    }
 
     public void setDefaults(List<String> defaults) {
         this.defaults = defaults;
