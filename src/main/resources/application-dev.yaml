@@ -14,16 +14,3 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
-
-app:
-  extensions:
-    defaults:
-      - bat
-      - cmd
-      - com
-      - cpl
-      - exe
-      - scr
-      - js
-    custom:
-      max: 200

@@ -20,4 +20,14 @@ public class BlockExtensionQueryServiceImpl implements BlockExtensionQueryServic
     public List<BlockExtension> findDefaultExtensions() {
         return repository.findAllByExtensionType(ExtensionType.DEFAULT);
     }
+
+    @Override
+    public List<BlockExtension> findCustomExtensions() {
+        return repository.findAllByExtensionType(ExtensionType.CUSTOM);
+    }
+
+    @Override
+    public long countCustomExtensions() {
+        return repository.countByExtensionType(ExtensionType.CUSTOM);
+    }
 }

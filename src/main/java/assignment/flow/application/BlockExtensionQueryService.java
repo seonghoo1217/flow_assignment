@@ -7,4 +7,8 @@ import java.util.List;
 public interface BlockExtensionQueryService {
 
     List<BlockExtension> findDefaultExtensions();
+
+    List<BlockExtension> findCustomExtensions();
+
+    long countCustomExtensions();
 }

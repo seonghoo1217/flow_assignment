@@ -26,6 +26,17 @@ public class BlockExtensionAPI {
         return ApiResponse.success(defaultExtensions);
     }
 
+    /*@GetMapping("/customs")
+    public ApiResponse<?> getCustomExtensions() {
+        List<BlockExtension> customExtensions = queryService.findCustomExtensions();
+        long count = queryService.countCustomExtensions();
+
+        return ApiResponse.success(Map.of(
+                "extensions", customExtensions,
+                "count", count
+        ));
+    }*/
+
     @PostMapping("/register")
     @ResponseStatus(HttpStatus.CREATED)
     public ApiResponse<?> registerExtension(@RequestBody ExtensionRegisterReqDto req) {
@@ -38,5 +49,11 @@ public class BlockExtensionAPI {
     public ApiResponse<?> deleteExtension(@PathVariable String extensionName) {
         commandService.deleteExtension(extensionName);
         return ApiResponse.success("deleted");
+    }
+
+    @PatchMapping("/{extensionName}/toggle")
+    public ApiResponse<?> toggleExtension(@PathVariable String extensionName) {
+        commandService.toggleExtension(extensionName);
+        return ApiResponse.success("toggled");
     }
 }

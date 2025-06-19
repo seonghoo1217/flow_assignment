@@ -1,3 +1,28 @@
 spring:
+  main:
+    web-application-type: servlet
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
   profiles:
     active: dev
+
+server:
+  port: 8081
+
+logging:
+  level:
+    org.springframework.web: DEBUG
+
+app:
+  extensions:
+    defaults:
+      - bat
+      - cmd
+      - com
+      - cpl
+      - exe
+      - scr
+      - js
+    custom:
+      max: 200

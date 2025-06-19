@@ -94,4 +94,13 @@ public class BlockExtensionCommandServiceImpl implements BlockExtensionCommandSe
 
         repository.delete(blockExtension);
     }
+
+    @Override
+    public void toggleExtension(String extensionName) {
+        BlockExtension blockExtension = repository.findByExtensionName(extensionName)
+                .orElseThrow(BlockExtensionNotSubject::new);
+
+        blockExtension.toggle();
+        repository.save(blockExtension);
+    }
 }

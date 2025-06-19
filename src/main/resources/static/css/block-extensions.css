@@ -1,0 +1,115 @@
+body {
+    font-family: 'Arial', sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 20px;
+    color: #333;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.section {
+    margin-bottom: 30px;
+}
+
+.section-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 5px;
+}
+
+.fixed-extensions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.extension-checkbox {
+    display: flex;
+    align-items: center;
+    margin-right: 15px;
+}
+
+.extension-checkbox input {
+    margin-right: 5px;
+}
+
+.custom-extension-form {
+    display: flex;
+    margin-bottom: 10px;
+}
+
+.custom-extension-form input {
+    flex: 1;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-right: 10px;
+}
+
+.custom-extension-form button {
+    padding: 8px 15px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.custom-extension-form button:hover {
+    background-color: #45a049;
+}
+
+.custom-extensions-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.custom-extension-item {
+    display: flex;
+    align-items: center;
+    background-color: #f5f5f5;
+    padding: 5px 10px;
+    border-radius: 4px;
+}
+
+.custom-extension-item span {
+    margin-right: 5px;
+}
+
+.custom-extension-item button {
+    background: none;
+    border: none;
+    color: #ff0000;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.error-message {
+    color: #ff0000;
+    margin-top: 5px;
+    display: none;
+}
+
+.counter {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 10px;
+}

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>파일 확장자 차단</title>
+    <link rel="stylesheet" th:href="@{/css/block-extensions.css}">
+</head>
+<body>
+<div class="container">
+    <h1>파일 확장자 차단</h1>
+
+    <div class="section">
+        <div class="section-title">고정 확장자</div>
+        <div class="fixed-extensions">
+            <div th:each="extension : ${defaultExtensions}" class="extension-checkbox">
+                <input type="checkbox"
+                       th:id="${'fixed-' + extension.extensionName}"
+                       th:checked="${extension.enabled}"
+                       th:data-name="${extension.extensionName}">
+                <label th:for="${'fixed-' + extension.extensionName}"
+                       th:text="${extension.extensionName}"></label>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-title">커스텀 확장자</div>
+        <div class="custom-extension-form">
+            <input type="text" id="custom-extension-input"
+                   placeholder="확장자 입력" maxlength="20">
+            <button id="add-extension-btn">추가</button>
+        </div>
+        <div id="error-message" class="error-message"></div>
+        <div class="counter">
+            현재 <span th:text="${customCount}">0</span>/200
+        </div>
+        <div class="custom-extensions-list">
+            <div th:each="extension : ${customExtensions}"
+                 class="custom-extension-item">
+                <span th:text="${extension.extensionName}"></span>
+                <button class="delete-btn"
+                        th:data-name="${extension.extensionName}">X
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script th:src="@{/js/block-extensions.js}"></script>
+</body>
+</html>
