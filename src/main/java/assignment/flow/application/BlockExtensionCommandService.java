@@ -8,4 +8,5 @@ public interface BlockExtensionCommandService {
 
     Long registerExtension(String extensionName);
 
+    void deleteExtension(String extensionName);
 }

@@ -32,4 +32,11 @@ public class BlockExtensionAPI {
         Long id = commandService.registerExtension(req.extensionName());
         return ApiResponse.success(id);
     }
+
+    @DeleteMapping("/{extensionName}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public ApiResponse<?> deleteExtension(@PathVariable String extensionName) {
+        commandService.deleteExtension(extensionName);
+        return ApiResponse.success("deleted");
+    }
 }

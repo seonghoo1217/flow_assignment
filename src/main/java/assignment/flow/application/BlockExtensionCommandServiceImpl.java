@@ -4,6 +4,7 @@ import assignment.flow.domain.entity.BlockExtension;
 import assignment.flow.domain.entity.ExtensionType;
 import assignment.flow.domain.exception.BlockExtensionExistsException;
 import assignment.flow.domain.exception.BlockExtensionLimitException;
+import assignment.flow.domain.exception.BlockExtensionNotSubject;
 import assignment.flow.domain.repo.BlockExtensionRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -76,5 +77,13 @@ public class BlockExtensionCommandServiceImpl implements BlockExtensionCommandSe
         BlockExtension save = repository.save(blockExtension);
 
         return save.getId();
+    }
+
+    @Override
+    public void deleteExtension(String extensionName) {
+        BlockExtension blockExtension = repository.findByExtensionName(extensionName)
+                .orElseThrow(BlockExtensionNotSubject::new);
+
+        repository.delete(blockExtension);
     }
 }

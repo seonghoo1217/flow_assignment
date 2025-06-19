@@ -20,4 +20,6 @@ public interface BlockExtensionRepository extends Repository<BlockExtension, Lon
     boolean existsBlockExtensionsByExtensionName(String extensionName);
 
     long countByExtensionType(ExtensionType extensionType);
+
+    void delete(BlockExtension blockExtension);
 }
