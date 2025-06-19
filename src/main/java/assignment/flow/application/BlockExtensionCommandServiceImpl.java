@@ -71,6 +71,10 @@ public class BlockExtensionCommandServiceImpl implements BlockExtensionCommandSe
             throw new BlockExtensionLimitException();
         }
 
+        if (name.isEmpty() || name.length() > 20) {
+            throw new IllegalArgumentException();
+        }
+
 
         BlockExtension blockExtension = new BlockExtension(name, ExtensionType.CUSTOM, true);
 
@@ -83,6 +87,10 @@ public class BlockExtensionCommandServiceImpl implements BlockExtensionCommandSe
     public void deleteExtension(String extensionName) {
         BlockExtension blockExtension = repository.findByExtensionName(extensionName)
                 .orElseThrow(BlockExtensionNotSubject::new);
+
+        if (blockExtension.getExtensionType() == ExtensionType.DEFAULT) {
+            throw new IllegalArgumentException();
+        }
 
         repository.delete(blockExtension);
     }
