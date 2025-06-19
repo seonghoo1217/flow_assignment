@@ -1,5 +1,6 @@
 package assignment.flow.global.exception;
 
+import assignment.flow.domain.exception.BlockExtensionExistsException;
 import lombok.Getter;
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
@@ -22,7 +23,13 @@ public enum ErrorCode {
     METHOD_NOT_ALLOWED(
             HttpStatus.METHOD_NOT_ALLOWED,
             "지원하지 않는 HTTP 메서드입니다.",
-            Set.of(HttpRequestMethodNotSupportedException.class));
+            Set.of(HttpRequestMethodNotSupportedException.class)),
+
+    EXISTS_BLOCK_EXTENSION(
+            HttpStatus.BAD_REQUEST,
+            "이미 존재하는 확장자 차단입니다.",
+            Set.of(BlockExtensionExistsException.class));
+
     private final HttpStatusCode status;
     private final String code;
     private final String message;

@@ -2,6 +2,7 @@ package assignment.flow.application;
 
 import assignment.flow.domain.entity.BlockExtension;
 import assignment.flow.domain.entity.ExtensionType;
+import assignment.flow.domain.exception.BlockExtensionExistsException;
 import assignment.flow.domain.repo.BlockExtensionRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -53,7 +54,16 @@ public class BlockExtensionCommandServiceImpl implements BlockExtensionCommandSe
     }
 
     @Override
-    public void registerExtension(String name) {
+    public Long registerExtension(String name) {
 
+        if (repository.existsBlockExtensionsByExtensionName(name)) {
+            throw new BlockExtensionExistsException();
+        }
+
+        BlockExtension blockExtension = new BlockExtension(name, ExtensionType.CUSTOM, true);
+
+        BlockExtension save = repository.save(blockExtension);
+
+        return save.getId();
     }
 }

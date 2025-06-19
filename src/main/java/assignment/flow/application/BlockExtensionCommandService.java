@@ -6,5 +6,6 @@ public interface BlockExtensionCommandService {
 
     void initDefaultExtensions(List<String> defaultExtensions);
 
-    void registerExtension(String extensionName);
+    Long registerExtension(String extensionName);
+
 }
