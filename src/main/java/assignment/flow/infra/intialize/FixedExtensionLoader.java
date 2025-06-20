@@ -20,12 +20,17 @@ public class FixedExtensionLoader implements ApplicationRunner {
     private final ExtensionProperties extensionProperties;
     private final ExtensionCounterRepository extensionCounterRepository;
 
+    private final String COUNTER_ID = "CUSTOM";
+
     @Override
     public void run(ApplicationArguments args) throws Exception {
         log.info(">>> default extensions: {}", extensionProperties.getDefaults());
 
         List<String> defaults = extensionProperties.getDefaults();
         blockExtensionCommandService.initDefaultExtensions(defaults);
-        extensionCounterRepository.save(new ExtensionCounter("CUSTOM", 0L, 0));
+
+        if (!extensionCounterRepository.existsExtensionCounterByCounterId(COUNTER_ID)) {
+            extensionCounterRepository.save(new ExtensionCounter(COUNTER_ID, 0L, 0));
+        }
     }
 }

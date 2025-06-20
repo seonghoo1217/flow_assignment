@@ -13,4 +13,6 @@ public interface ExtensionCounterRepository extends Repository<ExtensionCounter,
     ExtensionCounter findByCounterIdForUpdate(@Param("id") String id);
 
     ExtensionCounter save(ExtensionCounter extensionCounter);
+
+    boolean existsExtensionCounterByCounterId(String id);
 }
