@@ -2,9 +2,9 @@ package assignment.flow.application.extension;
 
 import assignment.flow.domain.entity.BlockExtension;
 import assignment.flow.domain.entity.ExtensionType;
-import assignment.flow.domain.exception.BlockExtensionExistsException;
-import assignment.flow.domain.exception.BlockExtensionLimitException;
-import assignment.flow.domain.exception.BlockExtensionNotSubject;
+import assignment.flow.domain.exception.extension.BlockExtensionExistsException;
+import assignment.flow.domain.exception.extension.BlockExtensionLimitException;
+import assignment.flow.domain.exception.extension.BlockExtensionNotSubject;
 import assignment.flow.domain.repo.BlockExtensionRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;

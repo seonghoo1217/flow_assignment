@@ -1,6 +1,6 @@
 package assignment.flow.infra.intialize;
 
-import assignment.flow.application.BlockExtensionCommandService;
+import assignment.flow.application.extension.BlockExtensionCommandService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.boot.ApplicationArguments;

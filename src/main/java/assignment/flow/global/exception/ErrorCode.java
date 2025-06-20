@@ -1,6 +1,9 @@
 package assignment.flow.global.exception;
 
-import assignment.flow.domain.exception.BlockExtensionExistsException;
+import assignment.flow.domain.exception.extension.BlockExtensionExistsException;
+import assignment.flow.domain.exception.extension.BlockExtensionLimitException;
+import assignment.flow.domain.exception.upload.UploadEmptyException;
+import assignment.flow.domain.exception.upload.UploadFailureException;
 import lombok.Getter;
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
@@ -36,7 +39,17 @@ public enum ErrorCode {
     LIMIT_EXTENSION_COUNT(
             HttpStatus.BAD_REQUEST,
             "확장자 차단은 최대 200개까지 가능합니다.",
-            Set.of());
+            Set.of(BlockExtensionLimitException.class)),
+
+    //upload
+    EMPTY_UPLOAD(
+            HttpStatus.BAD_REQUEST,
+            "업로드할 파일이 없습니다.",
+            Set.of(UploadEmptyException.class)),
+    UPLOAD_FAILED(
+            HttpStatus.INTERNAL_SERVER_ERROR,
+            "파일 업로드에 실패했습니다.",
+            Set.of(UploadFailureException.class));
 
     private final HttpStatusCode status;
     private final String code;
