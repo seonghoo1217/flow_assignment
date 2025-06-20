@@ -5,10 +5,10 @@ spring:
     prefix: classpath:/templates/
     suffix: .html
   profiles:
-    active: dev
+    active: prod
 
 server:
-  port: 8081
+  port: ${PORT:8081}
 
 logging:
   level:
