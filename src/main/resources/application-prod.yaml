@@ -1,0 +1,17 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: ENC(hzEowfgyvzsUTai+si1zYrNsjsON2eK1XTdbETwD0JL2OMs2tScdXWDF+QTKu4EgE9qEQGFbH7dyz4iAV2uOsKK+1zTBQHsOgaLDINPCbz9yzPZZ7MzMY0M1uQeY/2bhuLN0ikVoQ/hJ0PNV3c3oQkhbON0V/bAwJRVHezo+XXY=)
+    username: ENC(op3vah5+2/ZFvMtGQ/3u6g==)
+    password: ENC(dSaQQe0XcJ/GDIp4i3Oeo9OdiqBwNlT0)
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 5
+      idle-timeout: 30000
+      connection-timeout: 30000
+      pool-name: HikariDevPool
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    database: mysql
