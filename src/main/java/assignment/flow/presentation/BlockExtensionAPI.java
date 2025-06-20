@@ -1,7 +1,7 @@
 package assignment.flow.presentation;
 
-import assignment.flow.application.BlockExtensionCommandService;
-import assignment.flow.application.BlockExtensionQueryService;
+import assignment.flow.application.extension.BlockExtensionCommandService;
+import assignment.flow.application.extension.BlockExtensionQueryService;
 import assignment.flow.domain.entity.BlockExtension;
 import assignment.flow.global.dto.ApiResponse;
 import assignment.flow.presentation.dto.req.ExtensionRegisterReqDto;

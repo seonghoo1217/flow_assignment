@@ -1,4 +1,4 @@
-package assignment.flow.application;
+package assignment.flow.application.extension;
 
 import assignment.flow.domain.entity.BlockExtension;
 import assignment.flow.domain.entity.ExtensionType;

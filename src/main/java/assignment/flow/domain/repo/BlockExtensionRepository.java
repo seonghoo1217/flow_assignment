@@ -15,6 +15,8 @@ public interface BlockExtensionRepository extends Repository<BlockExtension, Lon
 
     List<BlockExtension> findAllByExtensionType(ExtensionType extensionType);
 
+    List<BlockExtension> findAllByEnabled(boolean enabled);
+
     BlockExtension save(BlockExtension blockExtension);
 
     boolean existsBlockExtensionsByExtensionName(String extensionName);

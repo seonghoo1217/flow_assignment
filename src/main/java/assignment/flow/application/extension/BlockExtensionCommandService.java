@@ -1,4 +1,4 @@
-package assignment.flow.application;
+package assignment.flow.application.extension;
 
 import java.util.List;
 

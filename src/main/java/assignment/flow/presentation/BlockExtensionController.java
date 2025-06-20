@@ -1,6 +1,6 @@
 package assignment.flow.presentation;
 
-import assignment.flow.application.BlockExtensionQueryService;
+import assignment.flow.application.extension.BlockExtensionQueryService;
 import assignment.flow.domain.entity.BlockExtension;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
