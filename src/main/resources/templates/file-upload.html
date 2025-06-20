@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>파일 업로드</title>
+    <link rel="stylesheet" th:href="@{/css/file-upload.css}">
+</head>
+<body>
+<div class="container">
+    <div class="nav">
+        <a href="/block-extensions">파일 확장자 차단 관리</a>
+        <a href="/file-upload">파일 업로드</a>
+    </div>
+
+    <h1>파일 업로드</h1>
+
+    <div th:if="${message}"
+         th:class="'alert ' + ${alertClass}"
+         th:text="${message}">
+    </div>
+
+    <form id="upload-form" method="POST" enctype="multipart/form-data" action="/file-upload">
+        <div class="form-group">
+            <label for="file">파일 선택:</label>
+            <input type="file" id="file" name="file" class="form-control">
+        </div>
+        <button type="submit" class="btn">업로드</button>
+    </form>
+
+    <div class="form-group" style="margin-top: 30px;">
+        <h3>주의사항</h3>
+        <p>차단된 확장자를 가진 파일은 업로드할 수 없습니다. 유의해 주세요!</p>
+        <p>차단된 확장자 목록은 <a href="/block-extensions">파일 확장자 차단 관리</a> 페이지에서 확인하세요.</p>
+    </div>
+</div>
+
+<script th:src="@{/js/file-upload.js}"></script>
+</body>
+</html>

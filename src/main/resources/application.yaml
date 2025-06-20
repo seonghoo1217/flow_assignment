@@ -26,3 +26,5 @@ app:
       - js
     custom:
       max: 200
+  upload:
+    dir: ${user.home}/flow_uploads
