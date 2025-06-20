@@ -1,11 +1,13 @@
 package assignment.flow.application.extension;
 
 import assignment.flow.domain.entity.BlockExtension;
+import assignment.flow.domain.entity.ExtensionCounter;
 import assignment.flow.domain.entity.ExtensionType;
 import assignment.flow.domain.exception.extension.BlockExtensionExistsException;
 import assignment.flow.domain.exception.extension.BlockExtensionLimitException;
 import assignment.flow.domain.exception.extension.BlockExtensionNotSubject;
 import assignment.flow.domain.repo.BlockExtensionRepository;
+import assignment.flow.domain.repo.ExtensionCounterRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -24,7 +26,8 @@ import java.util.stream.Collectors;
 @Transactional
 public class BlockExtensionCommandServiceImpl implements BlockExtensionCommandService {
 
-    private final BlockExtensionRepository repository;
+    private final BlockExtensionRepository extensionRepository;
+    private final ExtensionCounterRepository counterRepository;
     private final NamedParameterJdbcTemplate jdbc;
 
     @Value("${app.extensions.custom.max}")
@@ -42,7 +45,7 @@ public class BlockExtensionCommandServiceImpl implements BlockExtensionCommandSe
                 .map(String::toLowerCase)
                 .collect(Collectors.toList());
 
-        Set<String> existing = repository.findAllByExtensionNameIn(names).stream()
+        Set<String> existing = extensionRepository.findAllByExtensionNameIn(names).stream()
                 .map(BlockExtension::getExtensionName)
                 .collect(Collectors.toSet());
 
@@ -64,18 +67,22 @@ public class BlockExtensionCommandServiceImpl implements BlockExtensionCommandSe
     public Long registerExtension(String extensionName) {
         String verifyName = normalVerify(extensionName);
 
-        if (repository.existsBlockExtensionsByExtensionName(verifyName)) {
+        if (extensionRepository.existsBlockExtensionsByExtensionName(verifyName)) {
             throw new BlockExtensionExistsException();
         }
+        ExtensionCounter counter =
+                counterRepository.findByCounterIdForUpdate("CUSTOM");
 
-        long customCount = repository.countByExtensionType(ExtensionType.CUSTOM);
-        if (customCount >= CUSTOM_MAX) {
+        if (counter.getCountValue() >= CUSTOM_MAX) {
             throw new BlockExtensionLimitException();
         }
 
         BlockExtension blockExtension = new BlockExtension(verifyName, ExtensionType.CUSTOM, true);
 
-        BlockExtension save = repository.save(blockExtension);
+        BlockExtension save = extensionRepository.save(blockExtension);
+
+        counter.incrementCount();
+        counterRepository.save(counter);
 
         return save.getId();
     }
@@ -96,22 +103,22 @@ public class BlockExtensionCommandServiceImpl implements BlockExtensionCommandSe
 
     @Override
     public void deleteExtension(String extensionName) {
-        BlockExtension blockExtension = repository.findByExtensionName(extensionName)
+        BlockExtension blockExtension = extensionRepository.findByExtensionName(extensionName)
                 .orElseThrow(BlockExtensionNotSubject::new);
 
         if (blockExtension.getExtensionType() == ExtensionType.DEFAULT) {
             throw new IllegalArgumentException();
         }
 
-        repository.delete(blockExtension);
+        extensionRepository.delete(blockExtension);
     }
 
     @Override
     public void toggleExtension(String extensionName) {
-        BlockExtension blockExtension = repository.findByExtensionName(extensionName)
+        BlockExtension blockExtension = extensionRepository.findByExtensionName(extensionName)
                 .orElseThrow(BlockExtensionNotSubject::new);
 
         blockExtension.toggle();
-        repository.save(blockExtension);
+        extensionRepository.save(blockExtension);
     }
 }
