@@ -13,6 +13,7 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
 import java.util.Set;
@@ -60,9 +61,10 @@ public class BlockExtensionCommandServiceImpl implements BlockExtensionCommandSe
     }
 
     @Override
-    public Long registerExtension(String name) {
+    public Long registerExtension(String extensionName) {
+        String verifyName = normalVerify(extensionName);
 
-        if (repository.existsBlockExtensionsByExtensionName(name)) {
+        if (repository.existsBlockExtensionsByExtensionName(verifyName)) {
             throw new BlockExtensionExistsException();
         }
 
@@ -71,16 +73,25 @@ public class BlockExtensionCommandServiceImpl implements BlockExtensionCommandSe
             throw new BlockExtensionLimitException();
         }
 
-        if (name.isEmpty() || name.length() > 20) {
-            throw new IllegalArgumentException();
-        }
-
-
-        BlockExtension blockExtension = new BlockExtension(name, ExtensionType.CUSTOM, true);
+        BlockExtension blockExtension = new BlockExtension(verifyName, ExtensionType.CUSTOM, true);
 
         BlockExtension save = repository.save(blockExtension);
 
         return save.getId();
+    }
+
+    private String normalVerify(String extensionName) {
+        if (!StringUtils.hasText(extensionName)) {
+            throw new IllegalArgumentException("확장자를 입력해주세요.");
+        }
+        String trimmed = extensionName.trim().toLowerCase();
+        if (trimmed.length() > 20) {
+            throw new IllegalArgumentException("확장자는 최대 20자까지 가능합니다.");
+        }
+        if (!trimmed.matches("^[a-z0-9]+$")) {
+            throw new IllegalArgumentException("확장자는 영문자와 숫자만 허용됩니다.");
+        }
+        return trimmed;
     }
 
     @Override
