@@ -23,6 +23,9 @@ public class FileExtensionBlockFilter implements Filter {
 
     private final BlockExtensionRepository extensionRepository;
 
+    private final long MAX_FILE_UPLOAD_SIZE = 500L * 1024L; // 500 KB
+
+
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
@@ -39,6 +42,14 @@ public class FileExtensionBlockFilter implements Filter {
 
                 if (request instanceof MultipartHttpServletRequest) {
                     MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
+
+                    boolean tooLarge = multipartRequest.getFileMap().values().stream()
+                            .anyMatch(file -> file.getSize() > MAX_FILE_UPLOAD_SIZE);
+                    if (tooLarge) {
+                        response.sendError(HttpServletResponse.SC_REQUEST_ENTITY_TOO_LARGE,
+                                "FILE_TOO_LARGE");
+                        return;
+                    }
 
                     boolean hasBlockedFile = multipartRequest.getFileMap().values().stream()
                             .anyMatch(file -> {
@@ -67,6 +78,14 @@ public class FileExtensionBlockFilter implements Filter {
                     }
                 } else {
                     for (Part part : request.getParts()) {
+                        if (part.getSize() > MAX_FILE_UPLOAD_SIZE) {
+                            log.warn("크기 초과 파일: {} ({} bytes)",
+                                    part.getSubmittedFileName(), part.getSize());
+                            response.sendError(HttpServletResponse.SC_REQUEST_ENTITY_TOO_LARGE,
+                                    "FILE_TOO_LARGE");
+                            return;
+                        }
+
                         String filename = part.getSubmittedFileName();
                         if (filename != null && filename.contains(".")) {
                             String extension = filename.substring(filename.lastIndexOf(".") + 1).toLowerCase();
