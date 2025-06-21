@@ -21,14 +21,19 @@ document.addEventListener('DOMContentLoaded', function () {
                     return response.text().then(text => {
                         alert('❌ 파일 크기가 500KB를 초과했습니다. 500KB 이하만 첨부해주세요.');
                         throw new Error('File too large');
-                    })
+                    });
                 }
                 if (response.status === 500) {
                     return response.text().then(text => {
                         alert("❌ 서버 오류가 발생했습니다. 나중에 다시 시도해주세요. \n ex.) File Upload 최대치는 500KB입니다.");
                         throw new Error("Server error: " + text);
                     });
-
+                }
+                if (response.status === 400) {
+                    return response.text().then(text => {
+                        alert("❌ 파일이 비어있습니다. 파일을 등록하여주세요.");
+                        throw new Error("Server error: " + text);
+                    });
                 }
 
                 if (!response.ok) {

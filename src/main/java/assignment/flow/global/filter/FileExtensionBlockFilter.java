@@ -43,6 +43,19 @@ public class FileExtensionBlockFilter implements Filter {
                 if (request instanceof MultipartHttpServletRequest) {
                     MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
 
+                    if (multipartRequest.getFileMap().isEmpty()) {
+                        response.sendError(HttpServletResponse.SC_BAD_REQUEST, "NO_FILE_UPLOADED");
+                        return;
+                    }
+
+                    boolean invalid = multipartRequest.getFileMap().values().stream()
+                            .anyMatch(file -> file.getOriginalFilename() == null || file.getOriginalFilename().trim().isEmpty());
+
+                    if (invalid) {
+                        response.sendError(HttpServletResponse.SC_BAD_REQUEST, "FILE_NAME_EMPTY");
+                        return;
+                    }
+
                     boolean tooLarge = multipartRequest.getFileMap().values().stream()
                             .anyMatch(file -> file.getSize() > MAX_FILE_UPLOAD_SIZE);
                     if (tooLarge) {
@@ -78,6 +91,13 @@ public class FileExtensionBlockFilter implements Filter {
                     }
                 } else {
                     for (Part part : request.getParts()) {
+                        if (part.getSize() == 0) {
+                            log.warn("빈 파일 업로드: {}", part.getSubmittedFileName());
+                            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "FILE_NAME_EMPTY");
+                            return;
+                        }
+
+
                         if (part.getSize() > MAX_FILE_UPLOAD_SIZE) {
                             log.warn("크기 초과 파일: {} ({} bytes)",
                                     part.getSubmittedFileName(), part.getSize());
