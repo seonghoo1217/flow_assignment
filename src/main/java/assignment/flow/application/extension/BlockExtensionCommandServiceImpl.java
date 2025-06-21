@@ -109,6 +109,10 @@ public class BlockExtensionCommandServiceImpl implements BlockExtensionCommandSe
         if (blockExtension.getExtensionType() == ExtensionType.DEFAULT) {
             throw new IllegalArgumentException();
         }
+        ExtensionCounter counter =
+                counterRepository.findByCounterIdForUpdate("CUSTOM");
+
+        counter.decrementCount();
 
         extensionRepository.delete(blockExtension);
     }

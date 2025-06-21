@@ -26,6 +26,12 @@ public class ExtensionCounter {
         this.countValue++;
     }
 
+    public void decrementCount() {
+        if (this.countValue > 0) {
+            this.countValue--;
+        }
+    }
+
     public ExtensionCounter(String counterId, long countValue, long version) {
         this.counterId = counterId;
         this.countValue = countValue;
